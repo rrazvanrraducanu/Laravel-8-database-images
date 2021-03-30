@@ -92,7 +92,8 @@ class ImagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $image=Image::findOrFail($id);  
+         $image=Image::findOrFail($id);
+    unlink("./images/".$image->name);
     if ($request->hasFile('image'))
         {
 $file=$request->file('image');
@@ -115,6 +116,7 @@ $image->name=$target;
      */
     public function delete($id){
     $image=Image::where('id','=',$id)->first();
+    unlink("./images/".$image->name);
     if($image->delete()){
     Session::flash('message','Record was deleted');
     return redirect('/');
